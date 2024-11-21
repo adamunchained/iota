@@ -22,9 +22,10 @@ import { useCurrentAccount } from '@iota/dapp-kit';
 interface DetailsViewProps {
     asset: IotaObjectData;
     handleClose: () => void;
+    handleSend: () => void;
 }
 
-export function DetailsView({ handleClose, asset }: DetailsViewProps) {
+export function DetailsView({ handleClose, asset, handleSend }: DetailsViewProps) {
     const account = useCurrentAccount();
 
     const senderAddress = account?.address ?? '';
@@ -50,10 +51,6 @@ export function DetailsView({ handleClose, asset }: DetailsViewProps) {
 
     function handleMarketplace() {
         window.open('https://wiki.iota.org/', '_blank');
-    }
-
-    function handleSend() {
-        console.log('send');
     }
 
     return (
@@ -146,9 +143,13 @@ export function DetailsView({ handleClose, asset }: DetailsViewProps) {
                                                 key={idx}
                                                 keyText={aKey}
                                                 value={
-                                                    <Link key={aKey} href={valueLink || ''}>
-                                                        {value}
-                                                    </Link>
+                                                    valueLink ? (
+                                                        <Link key={aKey} href={valueLink || ''}>
+                                                            {value}
+                                                        </Link>
+                                                    ) : (
+                                                        value
+                                                    )
                                                 }
                                                 fullwidth
                                             />
